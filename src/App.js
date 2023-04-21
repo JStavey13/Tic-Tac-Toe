@@ -1,6 +1,14 @@
 // funtion for squars
 function Square({ value }) {
-  return <button className="square">{value}</button>
+
+function handleClick() {
+  console.log("clickerino")
+}
+
+  return <button className="square"
+    onClick={handleClick}>
+    
+    {value}</button>
 }
 
 // the primary function in the file
