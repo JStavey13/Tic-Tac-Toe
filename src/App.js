@@ -1,10 +1,10 @@
+import { useState } from "react";
 // funtion for squars
 function Square({ value }) {
-
+// function for clicking squares
 function handleClick() {
   console.log("clickerino")
 }
-
   return <button className="square"
     onClick={handleClick}>
     
@@ -18,23 +18,23 @@ export default function Board() {
     <>
     {/* the first board row */}
     <div className="boardrow">
-      <Square value="1" />
-      <Square value="2"  />
-      <Square value="3"  />
+      <Square />
+      <Square />
+      <Square />
     </div>
 
     {/* the second board row */}
     <div className="boardrow">
-    <Square value="4"  />
-    <Square value="5"  />
-    <Square value="6"  />
+    <Square />
+    <Square />
+    <Square />
     </div>
 
     {/* the third board row */}
     <div className="boardrow">
-    <Square value="7"  />
-    <Square value="8"  />
-    <Square value="9"  />
+    <Square />
+    <Square />
+    <Square />
     </div>
 
 
