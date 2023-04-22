@@ -1,9 +1,11 @@
 import { useState } from "react";
 // funtion for squars
-function Square({ value }) {
+function Square() {
+  const [value, setValue] = useState(null);
+
 // function for clicking squares
 function handleClick() {
-  console.log("clickerino")
+  setValue('X')
 }
   return <button className="square"
     onClick={handleClick}>
