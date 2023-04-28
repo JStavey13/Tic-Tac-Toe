@@ -1,65 +1,78 @@
-import { useState } from "react";
-// funtion for squars
-function Square() {
-  
-  // initiates the handleClick function when an item with Square class name is clicked
-return <button className="square">
-    {value}</button>
-}
+import React from 'react';
+import { useState } from 'react';
 
-// the primary function in the file
-export default function Board() {
-  // changes from x to o
-  const [xIsNext, setXIsNext] = useState(true);
-  // creates an array of 9 and sets them to null
- const [squares, setSquares] = useState(Array(9).fill(null))
-
- function handleClick(i) {
-  // prevents squares from changing after being filled
-  if (squares[i]) {
-    return;
-  }
-  const nextSquares = squares.slice();
-  if (xIsNext) {
-    nextSquares[i] = "X";
-  } else {
-    nextSquares[i] = "O"
-  }
-  setSquares(nextSquares);
-  setXIsNext(!xIsNext)
-}
+function Square({value, onSquareClick}) {
   return (
-    // a fragment tag for wrapping multiple elements
-    <>
-    {/* the first board row */}
-    <div className="boardrow">
-      {/* calls the Square function for each square and assigns each square a spot in the Squares array */}
-      <Square value={squares[0]} />
-      <Square value={squares[1]} />
-      <Square value={squares[2]} />
-    </div>
-
-    {/* the second board row */}
-    <div className="boardrow">
-    <Square value={squares[3]} />
-    <Square value={squares[4]} />
-    <Square value={squares[5]} />
-    </div>
-
-    {/* the third board row */}
-    <div className="boardrow">
-    <Square value={squares[6]} />
-    <Square value={squares[7]} />
-    <Square value={squares[8]} />
-    </div>
-
-
-
-
-
-
-
-
-    </>
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
   );
+}
+
+export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  function handleClick(i) {
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = 'X';
+    } else {
+      nextSquares[i] = 'O';
+    }
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  }
+
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
+
+  return (
+    <React.Fragment>
+      <div className="status">{status}</div>
+      <div className="board-row">
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      </div>
+    </React.Fragment>
+  );
+}
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
 }
